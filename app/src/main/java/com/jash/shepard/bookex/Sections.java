@@ -87,11 +87,8 @@ public class Sections extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        dbHelper = new DbHelper(this);
-        dbHelper.opendatabase();
         myAdapter = new MyAdapter(this,R.layout.sections_row,true,sections);
         sections_lv.setAdapter(myAdapter);
         myAdapter.notifyDataSetChanged();
-        dbHelper.close();
     }
 }

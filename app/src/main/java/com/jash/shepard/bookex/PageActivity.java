@@ -14,6 +14,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
 import java.util.ArrayList;
 
 import es.dmoral.toasty.Toasty;
@@ -141,12 +144,20 @@ public class PageActivity extends AppCompatActivity implements View.OnClickListe
         if (bookmark.getTag().toString().trim().equals("on")){
             bookmark.setImageResource(R.drawable.fav_off);
             bookmark.setTag("off");
+            YoYo.with(Techniques.Flash)
+                    .duration(700)
+                    .repeat(0)
+                    .playOn(bookmark);
             //Toast.makeText(PageActivity.this,"از علاقمندی ها حذف شد",Toast.LENGTH_SHORT).show();
             Toasty.warning(this,"از علاقمندی ها حذف شد",Toast.LENGTH_SHORT,true).show();
             dbHelper.setBookmark(section,0);
         }else if (bookmark.getTag().toString().trim().equals("off")){
             bookmark.setImageResource(R.drawable.fav_on);
             bookmark.setTag("on");
+            YoYo.with(Techniques.RubberBand)
+                    .duration(700)
+                    .repeat(0)
+                    .playOn(bookmark);
             //Toast.makeText(PageActivity.this,"به علاقمندی ها اضافه شد",Toast.LENGTH_SHORT).show();
             Toasty.success(this,"به علاقمندی ها اضافه شد",Toast.LENGTH_SHORT,true).show();
             dbHelper.setBookmark(section,1);

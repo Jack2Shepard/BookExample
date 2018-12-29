@@ -90,11 +90,9 @@ public class Bookmarks extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        dbHelper = new DbHelper(this);
         myAdapter = new MyAdapter(this, R.layout.sections_row, R.drawable.fav_on, favorites);
         bookmarks_lv.setAdapter(myAdapter);
         myAdapter.notifyDataSetChanged();
-        dbHelper.close();
         if (favorites.size() == 0) {
             //Toast.makeText(mContext,"همه موارد حذف شدند!",Toast.LENGTH_SHORT).show();
             Toasty.warning(this, "لیست علاقمندی ها خالی است", Toast.LENGTH_LONG, true).show();

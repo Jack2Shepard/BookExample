@@ -146,7 +146,7 @@ public class MyAdapter extends ArrayAdapter<String> implements View.OnClickListe
             case R.id.bookmark_image: {
                 dbHelper.opendatabase();
                 dbHelper.setBookmark(sections.get(position), 0);
-                YoYo.with(Techniques.SlideOutRight)
+                YoYo.with(Techniques.DropOut)
                         .duration(700)
                         .repeat(0)
                         .playOn(v);

@@ -58,6 +58,10 @@ public class PageActivity extends AppCompatActivity implements View.OnClickListe
         chapter = intent.getStringExtra("chapter");
         section = intent.getStringExtra("section");
         section_title_tv.setText(section);
+        YoYo.with(Techniques.FlipInX)
+                .duration(1700)
+                .repeat(0)
+                .playOn(section_title_tv);
         pages = new ArrayList<>();
         prev_btn.setOnClickListener(this);
         next_btn.setOnClickListener(this);
@@ -114,6 +118,14 @@ public class PageActivity extends AppCompatActivity implements View.OnClickListe
                             numOfPages);
                 }
                 this.currentPage = nextPage;
+                YoYo.with(Techniques.SlideOutDown)
+                        .duration(700)
+                        .repeat(0)
+                        .playOn(page_text);
+                YoYo.with(Techniques.SlideInUp)
+                        .duration(700)
+                        .repeat(0)
+                        .playOn(page_text);
                 checkButtons();
             }
             break;
@@ -124,6 +136,14 @@ public class PageActivity extends AppCompatActivity implements View.OnClickListe
                             numOfPages);
                 }
                 this.currentPage = prevPage;
+                YoYo.with(Techniques.SlideOutUp)
+                        .duration(700)
+                        .repeat(0)
+                        .playOn(page_text);
+                YoYo.with(Techniques.SlideInDown)
+                        .duration(700)
+                        .repeat(0)
+                        .playOn(page_text);
                 checkButtons();
             }
             break;

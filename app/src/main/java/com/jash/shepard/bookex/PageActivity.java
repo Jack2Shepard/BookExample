@@ -119,11 +119,11 @@ public class PageActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 this.currentPage = nextPage;
                 YoYo.with(Techniques.SlideOutDown)
-                        .duration(700)
+                        .duration(1000)
                         .repeat(0)
                         .playOn(page_text);
                 YoYo.with(Techniques.SlideInUp)
-                        .duration(700)
+                        .duration(1000)
                         .repeat(0)
                         .playOn(page_text);
                 checkButtons();
@@ -137,11 +137,11 @@ public class PageActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 this.currentPage = prevPage;
                 YoYo.with(Techniques.SlideOutUp)
-                        .duration(700)
+                        .duration(1000)
                         .repeat(0)
                         .playOn(page_text);
                 YoYo.with(Techniques.SlideInDown)
-                        .duration(700)
+                        .duration(1000)
                         .repeat(0)
                         .playOn(page_text);
                 checkButtons();

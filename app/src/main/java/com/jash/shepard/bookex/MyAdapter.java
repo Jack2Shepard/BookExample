@@ -84,6 +84,7 @@ public class MyAdapter extends ArrayAdapter<String> implements View.OnClickListe
                     mContext.getResources().getColor(R.color.colorTextAlt));
             bm_icon.setVisibility(View.GONE);
             chapter.setText(chapters.get(position));
+            rowAnimation(position,convertView);
         } else if (imageRes == 0 && sections != null && chapters != null) {
             convertView = inflater.inflate(R.layout.result_layout, parent, false);
             TextView chapter = convertView.findViewById(R.id.chapters_result_tv);
@@ -102,6 +103,7 @@ public class MyAdapter extends ArrayAdapter<String> implements View.OnClickListe
             section.setOnClickListener(this);
             section.setTag(position);
             chapter.setTag(position);
+            rowAnimation(position,convertView);
         } else if (flag) {
             convertView = inflater.inflate(R.layout.sections_row, parent, false);
             TextView section = convertView.findViewById(R.id.section_tv);
@@ -119,6 +121,7 @@ public class MyAdapter extends ArrayAdapter<String> implements View.OnClickListe
             } else if (dbHelper.checkBookmark(sections.get(position)) == 0) {
                 bm_icon.setVisibility(View.GONE);
             }
+            rowAnimation(position,convertView);
         } else {
             convertView = inflater.inflate(R.layout.sections_row, parent, false);
             TextView section = convertView.findViewById(R.id.section_tv);
@@ -127,14 +130,15 @@ public class MyAdapter extends ArrayAdapter<String> implements View.OnClickListe
             section.setTypeface(typeface);
             bm_icon.setOnClickListener(this);
             bm_icon.setTag(position);
+            YoYo.with(Techniques.StandUp)
+                    .duration(1700)
+                    .repeat(0)
+                    .playOn(convertView);
             section.setTextColor(position % 2 == 0 ?
                     mContext.getResources().getColor(R.color.colorText) :
                     mContext.getResources().getColor(R.color.colorTextAlt));
         }
-        Animation animation = AnimationUtils.loadAnimation(mContext,
-                position > lastposition ? R.anim.load_down_anim : R.anim.load_up_anim);
-        convertView.setAnimation(animation);
-        lastposition = position;
+
         return convertView;
     }
 
@@ -146,11 +150,11 @@ public class MyAdapter extends ArrayAdapter<String> implements View.OnClickListe
             case R.id.bookmark_image: {
                 dbHelper.opendatabase();
                 dbHelper.setBookmark(sections.get(position), 0);
+                sections.remove(position);
                 YoYo.with(Techniques.DropOut)
-                        .duration(700)
+                        .duration(1700)
                         .repeat(0)
                         .playOn(v);
-                sections.remove(position);
                 //Toast.makeText(mContext,"با موفقیت حذف شد!",Toast.LENGTH_SHORT).show();
                 Toasty.success(mContext, "با موفقیت از لیست حذف شد", Toast.LENGTH_SHORT, true).show();
                 notifyDataSetChanged();
@@ -180,5 +184,11 @@ public class MyAdapter extends ArrayAdapter<String> implements View.OnClickListe
             }
             break;
         }
+    }
+    public void rowAnimation(int position,View convertView){
+        Animation animation = AnimationUtils.loadAnimation(mContext,
+                position > lastposition ? R.anim.load_down_anim : R.anim.load_up_anim);
+        convertView.setAnimation(animation);
+        lastposition = position;
     }
 }

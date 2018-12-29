@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">کتاب</string>
+    <string name="contents_btn_txt">فهرست</string>
+    <string name="search_btn_txt">جستجو</string>
+    <string name="bookmarks_btn_txt">علاقمندی ها</string>
+    <string name="go_back_toolbar_text">بازگشت</string>
+    <string name="chapter_toolbar_txt_append">فصل :</string>
+    <string name="next_page_btn_txt"> بعدی</string>
+    <string name="prev_page_btn_txt"> قبلی</string>
+    <string name="pageOf">صفحه</string>
+    <string name="from">از</string>
+    <string name="search_in_titles_rd">در عناوین</string>
+    <string name="search_in_text_rd">در متن</string>
+    <string name="magic_row_title_text">فصل</string>
+    <string name="magic_row_section_text">بخش</string>
+    <string name="search_toolbar_title">جستجو</string>
+    <string name="favorites_toolbar_text">علاقمندی ها</string>
+    <string name="title_activity_drawer">DrawerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+</resources>

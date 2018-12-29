@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:layoutDirection="rtl"
+    android:layout_margin="10dp"
+    android:id="@+id/section_row_linear"
+    android:background="@drawable/edittext_frame">
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginHorizontal="2dp"
+        android:src="@drawable/script"/>
+    <TextView
+        android:id="@+id/section_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:textSize="22sp"
+        android:padding="5dp"
+        android:textColor="#fff"
+        android:layout_margin="10dp"/>
+    <ImageView
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/bookmark_image"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:src="@drawable/delete"
+        />
+
+</LinearLayout>

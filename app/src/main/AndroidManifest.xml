@@ -20,7 +20,8 @@
         <activity android:name=".Search" />
         <activity android:name=".Bookmarks" />
         <activity android:name=".Sections" />
-        <activity android:name=".PageActivity"></activity>
+        <activity android:name=".PageActivity" />
+        <activity android:name=".Settings"></activity>
     </application>
 
 </manifest>

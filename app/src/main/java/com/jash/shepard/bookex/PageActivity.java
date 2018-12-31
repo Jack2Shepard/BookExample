@@ -1,16 +1,16 @@
 package com.jash.shepard.bookex;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.service.quicksettings.TileService;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +33,8 @@ public class PageActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView bookmark;
     private TextView tb_title_tv;
     private ImageView tb_back_btn;
+    private SharedPreferences pagePrefs, readPrefs;
+    private String mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class PageActivity extends AppCompatActivity implements View.OnClickListe
 
     public void inits() {
         Calligrapher calligrapher = new Calligrapher(this);
-        calligrapher.setFont(this,"Karbalaei.ttf",true);
+        calligrapher.setFont(this, "fonts/Karbalaei.ttf", true);
         prev_btn = findViewById(R.id.prev_page_btn);
         next_btn = findViewById(R.id.next_page_btn);
         page_number = findViewById(R.id.page_number_tv);
@@ -70,18 +72,33 @@ public class PageActivity extends AppCompatActivity implements View.OnClickListe
         tb_back_btn = findViewById(R.id.toolbar_back_btn);
         tb_title_tv.setText((getString(R.string.chapter_toolbar_txt_append) + " " + chapter));
         tb_back_btn.setOnClickListener(this);
+        pagePrefs = getSharedPreferences("setting", MODE_PRIVATE);
+        readPrefs = getSharedPreferences("pageInfo", MODE_PRIVATE);
+        mode = pagePrefs.getString("readMode", "day");
+        if (mode.equalsIgnoreCase("day")) {
+            page_text.setTextColor(Color.BLACK);
+            page_text.setBackgroundColor(Color.WHITE);
+        } else {
+            page_text.setTextColor(Color.WHITE);
+            page_text.setBackgroundColor(Color.BLACK);
+        }
+        page_text.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/" +
+                pagePrefs.getString("font", "Ordibehesht_shablon") + ".ttf"));
+        float size = (float) pagePrefs.getInt("lineSpace",10);
+        page_text.setLineSpacing(size,1);
+        page_text.setTextSize(pagePrefs.getInt("fontSize", 17));
     }
 
     public void refresher() {
         dbHelper.opendatabase();
         numOfPages = dbHelper.page_counter("page", section);
-        currentPage = 1;
         for (int i = 0; i < numOfPages; i++) {
-            String text = dbHelper.page_getter("text", section, i + 1, 0);
-            PageClass page = new PageClass(text, i + 1);
+            String text = dbHelper.page_getter("text", section, i+1, 0);
+            PageClass page = new PageClass(text, i+1);
             pages.add(page);
         }
-        setPage(pages.get(0).getPage_text(), pages.get(0).getPage_number(), numOfPages);
+        currentPage = readPrefs.getInt(section, 1);
+        setPage(pages.get(currentPage - 1).getPage_text(), pages.get(currentPage - 1).getPage_number(), numOfPages);
         checkButtons();
         dbHelper.close();
     }
@@ -112,12 +129,13 @@ public class PageActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next_page_btn: {
-                int nextPage = currentPage + 1;
+                int nextPage = currentPage + 1 ;
                 if (nextPage <= numOfPages) {
                     setPage(pages.get(currentPage).getPage_text(), pages.get(currentPage).getPage_number(),
                             numOfPages);
                 }
                 this.currentPage = nextPage;
+                readPrefs.edit().putInt(section, this.currentPage).apply();
                 YoYo.with(Techniques.SlideOutDown)
                         .duration(1000)
                         .repeat(0)
@@ -136,6 +154,7 @@ public class PageActivity extends AppCompatActivity implements View.OnClickListe
                             numOfPages);
                 }
                 this.currentPage = prevPage;
+                readPrefs.edit().putInt(section, this.currentPage).apply();
                 YoYo.with(Techniques.SlideOutUp)
                         .duration(1000)
                         .repeat(0)
@@ -147,21 +166,21 @@ public class PageActivity extends AppCompatActivity implements View.OnClickListe
                 checkButtons();
             }
             break;
-            case R.id.bookmark_icon:{
+            case R.id.bookmark_icon: {
                 toggleBookmark();
             }
             break;
-            case R.id.toolbar_back_btn:{
-                startActivity(new Intent(PageActivity.this,Sections.class)
-                .putExtra("section",section)
-                .putExtra("chapter",chapter));
+            case R.id.toolbar_back_btn: {
+                startActivity(new Intent(PageActivity.this, Sections.class)
+                        .putExtra("section", section)
+                        .putExtra("chapter", chapter));
             }
         }
     }
 
-    public void toggleBookmark(){
+    public void toggleBookmark() {
         dbHelper.opendatabase();
-        if (bookmark.getTag().toString().trim().equals("on")){
+        if (bookmark.getTag().toString().trim().equals("on")) {
             bookmark.setImageResource(R.drawable.fav_off);
             bookmark.setTag("off");
             YoYo.with(Techniques.Flash)
@@ -169,9 +188,9 @@ public class PageActivity extends AppCompatActivity implements View.OnClickListe
                     .repeat(0)
                     .playOn(bookmark);
             //Toast.makeText(PageActivity.this,"از علاقمندی ها حذف شد",Toast.LENGTH_SHORT).show();
-            Toasty.warning(this,"از علاقمندی ها حذف شد",Toast.LENGTH_SHORT,true).show();
-            dbHelper.setBookmark(section,0);
-        }else if (bookmark.getTag().toString().trim().equals("off")){
+            Toasty.warning(this, "از علاقمندی ها حذف شد", Toast.LENGTH_SHORT, true).show();
+            dbHelper.setBookmark(section, 0);
+        } else if (bookmark.getTag().toString().trim().equals("off")) {
             bookmark.setImageResource(R.drawable.fav_on);
             bookmark.setTag("on");
             YoYo.with(Techniques.RubberBand)
@@ -179,34 +198,35 @@ public class PageActivity extends AppCompatActivity implements View.OnClickListe
                     .repeat(0)
                     .playOn(bookmark);
             //Toast.makeText(PageActivity.this,"به علاقمندی ها اضافه شد",Toast.LENGTH_SHORT).show();
-            Toasty.success(this,"به علاقمندی ها اضافه شد",Toast.LENGTH_SHORT,true).show();
-            dbHelper.setBookmark(section,1);
+            Toasty.success(this, "به علاقمندی ها اضافه شد", Toast.LENGTH_SHORT, true).show();
+            dbHelper.setBookmark(section, 1);
         }
         dbHelper.close();
     }
 
-    public boolean checkBookmark(){
+    public boolean checkBookmark() {
         dbHelper.opendatabase();
         boolean isMarked = false;
-        if(dbHelper.checkBookmark(section) == 1) {
+        if (dbHelper.checkBookmark(section) == 1) {
             isMarked = true;
         }
         dbHelper.close();
         return isMarked;
     }
 
-    public void showBookMarkStatus(){
-        if(checkBookmark()){
+    public void showBookMarkStatus() {
+        if (checkBookmark()) {
             bookmark.setImageResource(R.drawable.fav_on);
             bookmark.setTag("on");
-        }else{
+        } else {
             bookmark.setImageResource(R.drawable.fav_off);
             bookmark.setTag("off");
         }
     }
-    public void BackGroundAnimation(){
+
+    public void BackGroundAnimation() {
         LinearLayout bg = findViewById(R.id.page_act);
-        AnimationDrawable animationDrawable = (AnimationDrawable)bg.getBackground();
+        AnimationDrawable animationDrawable = (AnimationDrawable) bg.getBackground();
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();

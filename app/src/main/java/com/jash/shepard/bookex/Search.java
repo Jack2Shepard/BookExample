@@ -42,7 +42,7 @@ public class Search extends AppCompatActivity {
 
     public void intits() {
         Calligrapher calligrapher = new Calligrapher(this);
-        calligrapher.setFont(this,"adobe_arabic_shin.ttf",true);
+        calligrapher.setFont(this, "fonts/adobe_arabic_shin.ttf",true);
         search_ed = findViewById(R.id.search_ed);
         search_icon = findViewById(R.id.search_icon);
         search_rg = findViewById(R.id.radio_group);

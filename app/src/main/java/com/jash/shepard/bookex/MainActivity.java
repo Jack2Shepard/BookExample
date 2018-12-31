@@ -5,10 +5,8 @@ import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import es.dmoral.toasty.Toasty;
@@ -16,7 +14,7 @@ import me.anwarshahriar.calligrapher.Calligrapher;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    private LinearLayout contents,search,bookmarks;
+    private LinearLayout contents,search,bookmarks,settings;
     private DbHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +26,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void inits(){
         Calligrapher calligrapher = new Calligrapher(this);
-        calligrapher.setFont(this,"adobe_arabic_shin.ttf",true);
+        calligrapher.setFont(this, "fonts/adobe_arabic_shin.ttf",true);
         contents = findViewById(R.id.contents_btn);
         search = findViewById(R.id.search_btn);
         bookmarks = findViewById(R.id.bookmark_btn);
+        settings = findViewById(R.id.settings_btn);
         dbHelper = new DbHelper(this);
         contents.setOnClickListener(this);
         search.setOnClickListener(this);
         bookmarks.setOnClickListener(this);
+        settings.setOnClickListener(this);
     }
 
     @Override
@@ -56,6 +56,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Toast.LENGTH_SHORT,true).show();
                 }else
                 startActivity(new Intent(MainActivity.this,Bookmarks.class));
+            }
+            break;
+            case R.id.settings_btn :{
+                startActivity(new Intent(MainActivity.this,Settings.class));
             }
             break;
         }

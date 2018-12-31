@@ -3,23 +3,15 @@ package com.jash.shepard.bookex;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.content.res.AppCompatResources;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.PointerIcon;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +21,6 @@ import com.daimajia.androidanimations.library.YoYo;
 import java.util.ArrayList;
 
 import es.dmoral.toasty.Toasty;
-import me.anwarshahriar.calligrapher.Calligrapher;
 
 public class MyAdapter extends ArrayAdapter<String> implements View.OnClickListener {
     private Context mContext;
@@ -70,9 +61,9 @@ public class MyAdapter extends ArrayAdapter<String> implements View.OnClickListe
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Typeface typeface = Typeface.createFromAsset(mContext.getAssets(),
-                "Ordibehesht_shablon.TTF");
+                "fonts/Ordibehesht_shablon.ttf");
         Typeface typefaceTwo = Typeface.createFromAsset(mContext.getAssets(),
-                "Lalezar-Regular.ttf");
+                "fonts/Lalezar-Regular.ttf");
         LayoutInflater inflater = LayoutInflater.from(mContext);
         if (sections == null && imageRes == 0 && chapters != null) {
             convertView = inflater.inflate(R.layout.sections_row, parent, false);

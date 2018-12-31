@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -37,7 +36,7 @@ public class Contents extends AppCompatActivity {
 
     private void inits(){
         Calligrapher calligrapher = new Calligrapher(this);
-        calligrapher.setFont(this,"adobe_arabic_shin.ttf",true);
+        calligrapher.setFont(this, "fonts/adobe_arabic_shin.ttf",true);
         toolbar_title = findViewById(R.id.toolbar_title_tv);
         toolbar_title.setText(getString(R.string.contents_btn_txt));
         toolbar_back_btn = findViewById(R.id.toolbar_back_btn);

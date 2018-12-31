@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -39,7 +37,7 @@ public class Sections extends AppCompatActivity {
 
     public void intits(){
         Calligrapher calligrapher = new Calligrapher(this);
-        calligrapher.setFont(this,"Ordibehesht_shablon.TTF",true);
+        calligrapher.setFont(this, "fonts/Ordibehesht_shablon.ttf",true);
         sections_lv = findViewById(R.id.sections_lv);
         Intent intent = getIntent();
         chapter = intent.getStringExtra("chapter");

@@ -110,14 +110,14 @@ public class PageActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void checkButtons() {
-        if (currentPage == 1) {
+        if (numOfPages == 1 ) {
+            prev_btn.setEnabled(false);
+            next_btn.setEnabled(false);
+        } else if (currentPage == 1) {
             prev_btn.setEnabled(false);
             next_btn.setEnabled(true);
         } else if (currentPage == numOfPages) {
             prev_btn.setEnabled(true);
-            next_btn.setEnabled(false);
-        } else if (numOfPages == 1) {
-            prev_btn.setEnabled(false);
             next_btn.setEnabled(false);
         } else {
             prev_btn.setEnabled(true);

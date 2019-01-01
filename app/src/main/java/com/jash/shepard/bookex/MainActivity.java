@@ -9,6 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
 import es.dmoral.toasty.Toasty;
 import me.anwarshahriar.calligrapher.Calligrapher;
 
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         BackGroundAnimation();
         inits();
+        buttonsAnimation();
     }
 
     public void inits(){
@@ -79,5 +83,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
+    }
+
+    public void buttonsAnimation(){
+        YoYo.with(Techniques.RotateInUpRight)
+                .repeat(0)
+                .duration(1000)
+                .playOn(contents);
+        YoYo.with(Techniques.Wave)
+                .repeat(0)
+                .duration(1600)
+                .playOn(search);
+        YoYo.with(Techniques.Flash)
+                .repeat(0)
+                .duration(1600)
+                .playOn(bookmarks);
+        YoYo.with(Techniques.RotateInDownRight)
+                .repeat(0)
+                .duration(1600)
+                .playOn(settings);
     }
 }

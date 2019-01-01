@@ -5,12 +5,16 @@ import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+
+import java.security.SecureRandom;
 
 import es.dmoral.toasty.Toasty;
 import me.anwarshahriar.calligrapher.Calligrapher;
@@ -86,21 +90,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void buttonsAnimation(){
-        YoYo.with(Techniques.RotateInUpRight)
-                .repeat(0)
-                .duration(1000)
-                .playOn(contents);
-        YoYo.with(Techniques.Wave)
-                .repeat(0)
-                .duration(1600)
-                .playOn(search);
-        YoYo.with(Techniques.Flash)
-                .repeat(0)
-                .duration(1600)
-                .playOn(bookmarks);
-        YoYo.with(Techniques.RotateInDownRight)
-                .repeat(0)
-                .duration(1600)
-                .playOn(settings);
+        Animation animOne = AnimationUtils.loadAnimation(this,R.anim.slide_in_right_slow);
+        Animation animTwo = AnimationUtils.loadAnimation(this,R.anim.slide_in_left_slow);
+        contents.setAnimation(animOne);
+        search.setAnimation(animTwo);
+        bookmarks.setAnimation(animOne);
+        settings.setAnimation(animTwo);
     }
 }

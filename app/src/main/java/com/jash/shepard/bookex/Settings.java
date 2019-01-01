@@ -63,14 +63,12 @@ public class Settings extends AppCompatActivity {
         sample_Text.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/" +
                 sharedPreferences.getString("font", "Ordibehesht_shablon") + ".ttf"));
         if (sharedPreferences.getString("font", "Ordibehesht_shablon").equalsIgnoreCase("Ordibehesht_shablon")) {
-
-        } else if (sharedPreferences.getString("font", "Ordibehesht_shablon").equalsIgnoreCase("adobe_arabic_shin")) {
             font_spinner.setSelection(0);
 
-        } else if (sharedPreferences.getString("font", "Ordibehesht_shablon").equalsIgnoreCase("Khandevane")) {
+        } else if (sharedPreferences.getString("font", "Ordibehesht_shablon").equalsIgnoreCase("adobe_arabic_shin")) {
             font_spinner.setSelection(1);
 
-        } else if (sharedPreferences.getString("font", "Ordibehesht_shablon").equalsIgnoreCase("Lalezar-Regular")) {
+        } else if (sharedPreferences.getString("font", "Ordibehesht_shablon").equalsIgnoreCase("Khandevane")) {
             font_spinner.setSelection(2);
 
         } else {
@@ -112,6 +110,7 @@ public class Settings extends AppCompatActivity {
 
     public void setFontSize() {
         sample_Text.setTextSize(sharedPreferences.getInt("fontSize", fontSize_seekBar.getProgress()));
+        fontSize_seekBar.setProgress(sharedPreferences.getInt("fontSize",17));
         fontSize_seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -136,6 +135,7 @@ public class Settings extends AppCompatActivity {
     public void setLineSpace() {
         sample_Text.setLineSpacing(sharedPreferences.getInt("fontSize",
                 lineSpace_seekBar.getProgress()), 1);
+        lineSpace_seekBar.setProgress(sharedPreferences.getInt("lineSpace",15));
         lineSpace_seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -163,12 +163,12 @@ public class Settings extends AppCompatActivity {
             sample_Text.setBackgroundColor(Color.WHITE);
             sample_Text.setTextColor(Color.BLACK);
             rg_modes.clearCheck();
-            rb_day.setSelected(true);
+            rb_day.setChecked(true);
         } else {
             sample_Text.setBackgroundColor(Color.BLACK);
             sample_Text.setTextColor(Color.WHITE);
             rg_modes.clearCheck();
-            rb_night.setSelected(true);
+            rb_night.setChecked(true);
         }
         rg_modes.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

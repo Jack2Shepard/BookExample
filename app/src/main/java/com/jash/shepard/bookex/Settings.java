@@ -160,12 +160,12 @@ public class Settings extends AppCompatActivity {
 
     public void setReadMode() {
         if (sharedPreferences.getString("readMode", "day").equalsIgnoreCase("day")) {
-            sample_Text.setBackgroundColor(Color.WHITE);
+            sample_Text.setBackground(getResources().getDrawable(R.drawable.edittext_frame));
             sample_Text.setTextColor(Color.BLACK);
             rg_modes.clearCheck();
             rb_day.setChecked(true);
         } else {
-            sample_Text.setBackgroundColor(Color.BLACK);
+            sample_Text.setBackground(getResources().getDrawable(R.drawable.custom_button));
             sample_Text.setTextColor(Color.WHITE);
             rg_modes.clearCheck();
             rb_night.setChecked(true);
@@ -176,13 +176,13 @@ public class Settings extends AppCompatActivity {
                 switch (checkedId) {
                     case R.id.rb_day_mode: {
                         sample_Text.setTextColor(Color.BLACK);
-                        sample_Text.setBackgroundColor(Color.WHITE);
+                        sample_Text.setBackground(getResources().getDrawable(R.drawable.edittext_frame));
                         mEditor.putString("readMode", "day");
                     }
                     break;
                     case R.id.rb_night_mode: {
                         sample_Text.setTextColor(Color.WHITE);
-                        sample_Text.setBackgroundColor(Color.BLACK);
+                        sample_Text.setBackground(getResources().getDrawable(R.drawable.custom_button));
                         mEditor.putString("readMode", "night");
                     }
                     break;
@@ -202,7 +202,7 @@ public class Settings extends AppCompatActivity {
         decline_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mEditor.clear();
+                finish();
             }
         });
     }
@@ -222,12 +222,14 @@ public class Settings extends AppCompatActivity {
             public void onClick(View v) {
                 mEditor.commit();
                 dialog.dismiss();
+                finish();
             }
         });
         no_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                finish();
             }
         });
     }

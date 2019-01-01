@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class PageActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView tb_back_btn;
     private SharedPreferences pagePrefs, readPrefs;
     private String mode;
+    private ScrollView page_text_bg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class PageActivity extends AppCompatActivity implements View.OnClickListe
         next_btn = findViewById(R.id.next_page_btn);
         page_number = findViewById(R.id.page_number_tv);
         page_text = findViewById(R.id.page_text);
+        page_text_bg = findViewById(R.id.page_text_bg);
         section_title_tv = findViewById(R.id.section_title_tv);
         bookmark = findViewById(R.id.bookmark_icon);
         dbHelper = new DbHelper(this);
@@ -77,10 +80,10 @@ public class PageActivity extends AppCompatActivity implements View.OnClickListe
         mode = pagePrefs.getString("readMode", "day");
         if (mode.equalsIgnoreCase("day")) {
             page_text.setTextColor(Color.BLACK);
-            page_text.setBackgroundColor(Color.WHITE);
+            page_text_bg.setBackground(getResources().getDrawable(R.drawable.edittext_frame));
         } else {
             page_text.setTextColor(Color.WHITE);
-            page_text.setBackgroundColor(Color.BLACK);
+            page_text_bg.setBackground(getResources().getDrawable(R.drawable.custom_button));
         }
         page_text.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/" +
                 pagePrefs.getString("font", "Ordibehesht_shablon") + ".ttf"));

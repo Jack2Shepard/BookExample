@@ -1,5 +1,6 @@
 package com.jash.shepard.bookex;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -8,9 +9,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -139,22 +142,7 @@ public class MyAdapter extends ArrayAdapter<String> implements View.OnClickListe
         int position = (Integer) v.getTag();
         switch (v.getId()) {
             case R.id.bookmark_image: {
-                dbHelper.opendatabase();
-                dbHelper.setBookmark(sections.get(position), 0);
-                sections.remove(position);
-                YoYo.with(Techniques.DropOut)
-                        .duration(1700)
-                        .repeat(0)
-                        .playOn(v);
-                //Toast.makeText(mContext,"با موفقیت حذف شد!",Toast.LENGTH_SHORT).show();
-                Toasty.success(mContext, "با موفقیت از لیست حذف شد", Toast.LENGTH_SHORT, true).show();
-                notifyDataSetChanged();
-                if (sections.size() == 0) {
-                    //Toast.makeText(mContext,"همه موارد حذف شدند!",Toast.LENGTH_SHORT).show();
-                    Toasty.warning(mContext, "لیست علاقمندی ها خالی شد", Toast.LENGTH_LONG, true).show();
-                    mContext.startActivity(new Intent(mContext, MainActivity.class));
-                }
-                dbHelper.close();
+                confirmDelete(position);
             }
             break;
             case R.id.sections_result_tv: {
@@ -181,5 +169,41 @@ public class MyAdapter extends ArrayAdapter<String> implements View.OnClickListe
                 position > lastposition ? R.anim.load_down_anim : R.anim.load_up_anim);
         convertView.setAnimation(animation);
         lastposition = position;
+    }
+    private void confirmDelete (int pos){
+        final int position = pos;
+        final Dialog dialog = new Dialog(mContext);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.setting_dialog);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCancelable(true);
+        dialog.show();
+        Button yes_btn,no_btn ;
+        yes_btn = dialog.findViewById(R.id.yes_dialog);
+        no_btn = dialog.findViewById(R.id.no_dialog);
+        yes_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dbHelper.opendatabase();
+                dbHelper.setBookmark(sections.get(position), 0);
+                sections.remove(position);
+                //Toast.makeText(mContext,"با موفقیت حذف شد!",Toast.LENGTH_SHORT).show();
+                Toasty.success(mContext, "با موفقیت از لیست حذف شد", Toast.LENGTH_SHORT, true).show();
+                notifyDataSetChanged();
+                if (sections.size() == 0) {
+                    //Toast.makeText(mContext,"همه موارد حذف شدند!",Toast.LENGTH_SHORT).show();
+                    Toasty.warning(mContext, "لیست علاقمندی ها خالی شد", Toast.LENGTH_LONG, true).show();
+                    mContext.startActivity(new Intent(mContext, MainActivity.class));
+                }
+                dbHelper.close();
+                dialog.dismiss();
+            }
+        });
+        no_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 }
